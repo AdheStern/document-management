@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Document extends Model
 {
-    protected $guarded = [];
-
+    protected $fillable = [
+        'name', 'type', 'state', 'content', 'user_id', 'reception_at', 'delivery_at', 'deadline'
+    ];
 }
