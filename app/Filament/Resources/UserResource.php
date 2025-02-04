@@ -10,8 +10,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
 
 class UserResource extends Resource
 {
@@ -24,15 +24,22 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Nombre')
                     ->required()
                     ->maxLength(255),
+
                 Forms\Components\TextInput::make('email')
+                    ->label('Correo Electrónico')
                     ->email()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
+
+                Forms\Components\DateTimePicker::make('email_verified_at')
+                    ->label('Verificado en'),
+
                 Forms\Components\TextInput::make('password')
                     ->password()
+                    ->label('Contraseña')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -42,25 +49,32 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
+                    ->label('Nombre')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
+
+                TextColumn::make('email')
+                    ->label('Correo')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
+
+                TextColumn::make('email_verified_at')
+                    ->label('Verificado en')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+
+                TextColumn::make('created_at')
+                    ->label('Creado en')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+
+                TextColumn::make('updated_at')
+                    ->label('Actualizado en')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
@@ -74,7 +88,9 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\DocumentsRelationManager::class,
+            RelationManagers\AssignmentsRelationManager::class,
+            RelationManagers\HistoriesRelationManager::class,
         ];
     }
 
@@ -87,3 +103,4 @@ class UserResource extends Resource
         ];
     }
 }
+

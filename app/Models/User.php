@@ -45,4 +45,27 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    /**
+     * Relación: Un usuario puede ser responsable de varios documentos.
+     */
+    public function documents(): HasMany
+    {
+        return $this->hasMany(Document::class, 'user_id');
+    }
+
+    /**
+     * Relación: Un usuario puede tener múltiples asignaciones.
+     */
+    public function assignments(): HasMany
+    {
+        return $this->hasMany(Assignment::class, 'user_id');
+    }
+
+    /**
+     * Relación: Un usuario puede tener múltiples registros en el historial.
+     */
+    public function histories(): HasMany
+    {
+        return $this->hasMany(History::class, 'user_id');
+    }
 }

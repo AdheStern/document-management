@@ -116,7 +116,9 @@ class DocumentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\AssignmentsRelationManager::class,
+            RelationManagers\HistoriesRelationManager::class,
+            RelationManagers\FinesRelationManager::class,
         ];
     }
 
